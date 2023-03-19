@@ -1,4 +1,4 @@
-import { React, useEffect, useRef } from 'react';
+import { React, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import { Button, CardContent, CardMedia, Typography } from '@mui/material';
@@ -23,11 +23,9 @@ export function Carousel(props: CarouselProps) {
   let arrowIcons: any;
   let scrollWidth: number;
 
-  const carouselRef = useRef(null);
-
   useEffect(() => {
-    cardWidth = document.querySelectorAll('.card')[0].clientWidth + 16;
     carousel = document.querySelector('#cardContainer');
+    cardWidth = document.querySelectorAll('.card')[0].clientWidth + 16;
     arrowIcons = document.querySelectorAll('.navButtons');
     scrollWidth = carousel.scrollWidth - carousel.clientWidth;
   }, []);
@@ -36,8 +34,9 @@ export function Carousel(props: CarouselProps) {
     carousel.scrollLeft += e.target.id == 'left' ? -cardWidth : cardWidth;
     setTimeout(() => {
       arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
-      arrowIcons[1].style.opacity =
-        carousel.scrollLeft == scrollWidth ? 0.2 : 1;
+      arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? "none" : "";
+      arrowIcons[1].style.opacity = carousel.scrollLeft == scrollWidth ? 0.2 : 1;
+      arrowIcons[1].style.pointerEvents = carousel.scrollLeft == scrollWidth ? "none" : "";
     }, 60);
   };
 
@@ -47,6 +46,8 @@ export function Carousel(props: CarouselProps) {
         display: 'flex',
         position: 'relative',
         width: '100%',
+        padding: "10px 0",
+        justifyContent: "center"
       }}
     >
       <Button
@@ -54,6 +55,7 @@ export function Carousel(props: CarouselProps) {
         className="navButtons"
         sx={{
           minWidth: '24px',
+          opacity: '0.2'
         }}
         onClick={(e) => handleClick(e)}
         size="small"
@@ -67,7 +69,6 @@ export function Carousel(props: CarouselProps) {
       </Button>
       <Box
         id="cardContainer"
-        ref={carouselRef}
         sx={{
           display: 'flex',
           position: 'relative',
@@ -75,7 +76,7 @@ export function Carousel(props: CarouselProps) {
           overflow: 'hidden',
           scrollBehavior: 'smooth',
           whiteSpace: 'nowrap',
-          background: 'red',
+          background: '#3d3b3b',
         }}
       >
         {props.cards &&
@@ -100,7 +101,9 @@ export function Carousel(props: CarouselProps) {
 
               <CardContent
                 sx={{
-                  padding: '0 0 0 5px',
+                  ':last-child': {
+                    padding: '0 0 0 5px',
+                  },
                 }}
               >
                 <Typography variant="body2" component="div">

@@ -1,60 +1,68 @@
 export const carouselData = {
-    id: "Carousel",
-    cards: [{
-        label: "Label 1",
-        title: "Title 1",
-        description: "Description 1",
-        url: "",
-        alt: ""
-    }, {
-        label: "Label 2",
-        title: "Title 2",
-        description: "Description 2",
-        url: "",
-        alt: ""
-    },{
-        label: "Label 3",
-        title: "Title 3",
-        description: "Description 3",
-        url: "",
-        alt: ""
-    }, {
-        label: "Label 4",
-        title: "Title 4",
-        description: "Description 4",
-        url: "",
-        alt: ""
-    }, {
-        label: "Label 5",
-        title: "Title 5",
-        description: "Description 5",
-        url: "",
-        alt: ""
-    },{
-        label: "Label 6",
-        title: "Title 6",
-        description: "Description 6",
-        url: "",
-        alt: ""
-    },{
-        label: "Label 7",
-        title: "Title 7",
-        description: "Description 7",
-        url: "",
-        alt: ""
-    },{
-        label: "Label 8",
-        title: "Title 8",
-        description: "Description 8",
-        url: "",
-        alt: ""
+  id: 'Carousel',
+  cards: [
+    {
+      label: 'Label 1',
+      title: 'Title 1',
+      description: 'Description 1',
+      url: 'https://www.fotoaparat.cz/imgs/a/26/2639/0n1wjdf0-cr-em13-09-230x173x9.jpg',
+      alt: '',
     },
-    // {
-    //     label: "Label 9",
-    //     title: "Title 5",
-    //     description: "Description 5",
-    //     url: "",
-    //     alt: ""
-    // }
-]
-}
+    {
+      label: 'Label 2',
+      title: 'Title 2',
+      description: 'Description 2',
+      url: 'https://www.fotoaparat.cz/imgs/a/30/3020/wjwv758l-mac07759-230x173x9.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 3',
+      title: 'Title 3',
+      description: 'Description 3',
+      url: 'https://www.cameraegg.org/wp-content/uploads/2013/03/Canon-EOS-100D-Rebel-SL1-Sample-Image.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 4',
+      title: 'Title 4',
+      description: 'Description 4',
+      url: 'https://www.fotoaparat.cz/storage/a/30/3020/j8wq5qgc-mac07958.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 5',
+      title: 'Title 5',
+      description: 'Description 5',
+      url: 'https://www.fotoaparat.cz/imgs/a/26/2639/0n1wjdf0-cr-em13-09-230x173x9.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 6',
+      title: 'Title 6',
+      description: 'Description 6',
+      url: 'https://www.fotoaparat.cz/imgs/a/30/3020/wjwv758l-mac07759-230x173x9.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 7',
+      title: 'Title 7',
+      description: 'Description 7',
+      url: 'https://www.cameraegg.org/wp-content/uploads/2013/03/Canon-EOS-100D-Rebel-SL1-Sample-Image.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 8',
+      title: 'Title 8',
+      description: 'Description 8',
+      url: 'https://www.fotoaparat.cz/storage/a/30/3020/j8wq5qgc-mac07958.jpg',
+      alt: '',
+    },
+    {
+      label: 'Label 9',
+      title: 'Title 9',
+      description: 'Description 9',
+      url: 'https://www.fotoaparat.cz/storage/p/23/01/30/bj2tp9hh-dlask-82a4304.jpg',
+      alt: '',
+    },
+  ],
+};
