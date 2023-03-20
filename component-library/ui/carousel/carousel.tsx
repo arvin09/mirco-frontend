@@ -35,8 +35,8 @@ export function Carousel(props: CarouselProps) {
     setTimeout(() => {
       arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
       arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? "none" : "";
-      arrowIcons[1].style.opacity = carousel.scrollLeft == scrollWidth ? 0.2 : 1;
-      arrowIcons[1].style.pointerEvents = carousel.scrollLeft == scrollWidth ? "none" : "";
+      arrowIcons[1].style.opacity = carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
+      arrowIcons[1].style.pointerEvents = carousel.scrollLeft >= scrollWidth ? "none" : "";
     }, 60);
   };
 
