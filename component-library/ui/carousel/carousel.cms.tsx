@@ -1,5 +1,6 @@
 export const carouselData = {
   id: 'Carousel',
+  orientation: 'h',
   cards: [
     {
       label: 'Label 1',

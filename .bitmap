@@ -22,18 +22,5 @@
             }
         }
     },
-    "ui/to-do": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "arvin-org.component-library",
-        "mainFile": "index.ts",
-        "rootDir": "component-library/ui/to-do",
-        "config": {
-            "teambit.react/react-env@0.0.44": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react-env"
-            }
-        }
-    },
     "$schema-version": "15.0.0"
 }
