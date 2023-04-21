@@ -97,18 +97,16 @@ export function Carousel(props: CarouselProps) {
     },
   };
 
-  const handleClick = (e) => {
+  const handleScroll= () => {
+    arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
+    arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? 'none' : '';
+    arrowIcons[1].style.opacity = carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
+    arrowIcons[1].style.pointerEvents = carousel.scrollLeft >= scrollWidth ? 'none' : '';
+  }
+
+  const handleClick = (e:Event) => {
     cardWidth = document.querySelectorAll('.card')[0].clientWidth + 16;
-    carousel.scrollLeft += e.target.id == 'left' ? -cardWidth : cardWidth;
-    setTimeout(() => {
-      arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
-      arrowIcons[0].style.pointerEvents =
-        carousel.scrollLeft == 0 ? 'none' : '';
-      arrowIcons[1].style.opacity =
-        carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
-      arrowIcons[1].style.pointerEvents =
-        carousel.scrollLeft >= scrollWidth ? 'none' : '';
-    }, 60);
+    carousel.scrollLeft += e?.target?.id == 'left' ? -cardWidth*4 : cardWidth*4;
   };
 
   return (
@@ -127,7 +125,7 @@ export function Carousel(props: CarouselProps) {
           }}
         />
       </Button>
-      <Box id="cardContainer" sx={styles.container}>
+      <Box id="cardContainer" sx={styles.container} onScroll={() => handleScroll()}>
         {props.cards &&
           props.cards.map((card, index) => (
             <Card key={index} className="card" sx={styles.card}>
