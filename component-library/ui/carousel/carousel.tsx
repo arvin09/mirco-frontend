@@ -98,10 +98,12 @@ export function Carousel(props: CarouselProps) {
   };
 
   const handleScroll= () => {
-    arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
-    arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? 'none' : '';
-    arrowIcons[1].style.opacity = carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
-    arrowIcons[1].style.pointerEvents = carousel.scrollLeft >= scrollWidth ? 'none' : '';
+    if(arrowIcons[0].offsetWidth != 0) {
+      arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
+      arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? 'none' : '';
+      arrowIcons[1].style.opacity = carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
+      arrowIcons[1].style.pointerEvents = carousel.scrollLeft >= scrollWidth ? 'none' : '';
+    }
   }
 
   const handleClick = (e:Event) => {
