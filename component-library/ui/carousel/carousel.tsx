@@ -5,11 +5,13 @@ import { Button, CardContent, CardMedia, Typography } from '@mui/material';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
+// TODO: use ref instead of javascript
 type orientationType = 'h' | 'v';
 
 export type CarouselProps = {
-  cards: card[];
-  orientation: orientationType;
+  id: string,
+  cards: card[],
+  orientation?: orientationType
 };
 
 interface card {
@@ -23,17 +25,37 @@ interface card {
 export function Carousel(props: CarouselProps) {
   let carousel: any;
   let cardWidth: number;
-  let arrowIcons: any;
+  let leftNav, rightNav: any;
   let scrollWidth: number;
+  let scrollCount: number = 1;
+  let scrollItemCount: number = 0;
 
   useEffect(() => {
-    carousel = document.querySelector('#cardContainer');
-    // cardWidth = document.querySelectorAll('.card')[0].clientWidth + 16;
-    arrowIcons = document.querySelectorAll('.navButtons');
-    scrollWidth = carousel.scrollWidth - carousel.clientWidth;
+    carousel = document.querySelector(`#${props.id}-cardContainer`);
+    leftNav = document.querySelector(`#${props.id}-left`);
+    rightNav = document.querySelector(`#${props.id}-right`);
+    scrollWidth = carousel.scrollWidth - (carousel.clientWidth);
   }, []);
 
   const styles = {
+    mainContainer: {
+      width: '100%',
+      margin: 'auto',
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingLeft: {
+        xs: '10px',
+        sm: '10px',
+        md: '32px',
+      },
+      paddingRight: {
+        xs: '15px',
+        sm: '10px',
+        md: '30px',
+      },
+    },
     navButton: {
       minWidth: '24px',
       opacity: '0.2',
@@ -48,18 +70,12 @@ export function Carousel(props: CarouselProps) {
       },
       marginTop: '10px',
     },
-    container: {
+    cardContainer: {
       display: 'flex',
       position: 'relative',
-      maxWidth: {
-        xs: '100%',
-        sm: '732px',
-        md: '1176px',
-      },
       overflow: { xs: 'scroll', md: 'hidden' },
       scrollBehavior: 'smooth',
       whiteSpace: 'nowrap',
-      // background: '#3d3b3b',
     },
     card: {
       minWidth: {
@@ -92,77 +108,103 @@ export function Carousel(props: CarouselProps) {
       display: 'flex',
       position: 'relative',
       width: '100%',
-      // padding: "10px",
       justifyContent: 'center',
     },
   };
 
-  const handleScroll= () => {
-    if(arrowIcons[0].offsetWidth != 0) {
-      arrowIcons[0].style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
-      arrowIcons[0].style.pointerEvents = carousel.scrollLeft == 0 ? 'none' : '';
-      arrowIcons[1].style.opacity = carousel.scrollLeft >= scrollWidth ? 0.2 : 1;
-      arrowIcons[1].style.pointerEvents = carousel.scrollLeft >= scrollWidth ? 'none' : '';
+  const handleScroll = () => {
+    if (leftNav.offsetWidth != 0) {
+      leftNav.style.opacity = carousel.scrollLeft == 0 ? 0.2 : 1;
+      leftNav.style.pointerEvents = carousel.scrollLeft == 0 ? 'none' : '';
+      rightNav.style.opacity = Math.ceil(carousel.scrollLeft+5) >= scrollWidth ? 0.2 : 1;
+      rightNav.style.pointerEvents = Math.ceil(carousel.scrollLeft+5) >= scrollWidth ? 'none' : '';
     }
-  }
+  };
 
-  const handleClick = (e:Event) => {
+  const handleClick = (e: any) => {
     cardWidth = document.querySelectorAll('.card')[0].clientWidth + 16;
-    carousel.scrollLeft += e?.target?.id == 'left' ? -cardWidth*4 : cardWidth*4;
+    scrollCount = e?.target?.id == `${props.id}-left` ? --scrollCount : ++scrollCount;
+    scrollItemCount = props.orientation === 'v' ? 7 : 4;
+
+    if((e?.target?.id == `${props.id}-right` && scrollCount === Math.ceil(props.cards.length/scrollItemCount)) 
+    || (e?.target?.id == `${props.id}-left` && scrollCount === Math.ceil(props.cards.length/scrollItemCount)) ) {
+      scrollItemCount = props.cards.length%scrollItemCount
+    }
+    
+    const scrollLength = cardWidth * scrollItemCount;
+    carousel.scrollLeft += e?.target?.id == `${props.id}-left` ? -scrollLength : scrollLength;
   };
 
   return (
-    <Box sx={styles.wrapper}>
-      <Button
-        id="left"
-        className="navButtons"
-        sx={styles.navButton}
-        onClick={(e) => handleClick(e)}
-        size="small"
+    <Box
+      id={props.id}
+      sx={styles.mainContainer}
+    >
+      <Box
+        className="header"
+        sx={styles.header}
       >
-        <ArrowBackIosNewIcon
-          fontSize="medium"
-          sx={{
-            pointerEvents: 'none',
-          }}
-        />
-      </Button>
-      <Box id="cardContainer" sx={styles.container} onScroll={() => handleScroll()}>
-        {props.cards &&
-          props.cards.map((card, index) => (
-            <Card key={index} className="card" sx={styles.card}>
-              <CardMedia image={card.url} sx={styles.image} />
-              <CardContent
-                sx={{
-                  ':last-child': {
-                    padding: '0 0 0 5px',
-                  },
-                }}
-              >
-                <Typography variant="body2" component="div">
-                  {card.title || 'Title'}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {card.description || 'Description'}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
+        <Typography variant="h6" component="span">
+          Heading
+        </Typography>
+        <Typography variant="body2" component="span" sx={{pt: "8px"}}>
+          View all
+        </Typography>
       </Box>
-      <Button
-        id="right"
-        className="navButtons"
-        sx={{ ...styles.navButton, opacity: 1 }}
-        onClick={(e) => handleClick(e)}
-        size="small"
-      >
-        <ArrowForwardIosRoundedIcon
-          fontSize="medium"
-          sx={{
-            pointerEvents: 'none',
-          }}
-        />
-      </Button>
+      <Box sx={styles.wrapper}>
+        <Button
+          id={`${props.id}-left`}
+          sx={styles.navButton}
+          onClick={(e) => handleClick(e)}
+          size="small"
+        >
+          <ArrowBackIosNewIcon
+            fontSize="medium"
+            sx={{
+              pointerEvents: 'none',
+            }}
+          />
+        </Button>
+        <Box
+          id={`${props.id}-cardContainer`}
+          sx={styles.cardContainer}
+          onScroll={() => handleScroll()}
+        >
+          {props.cards &&
+            props.cards.map((card, index) => (
+              <Card key={index} className="card" sx={styles.card}>
+                <CardMedia image={card.url} sx={styles.image} />
+                <CardContent
+                  sx={{
+                    ':last-child': {
+                      padding: '0 0 0 5px',
+                    },
+                  }}
+                >
+                  <Typography variant="body1" component="div">
+                    {card.title || 'Title'}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {card.description || 'Description'}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+        </Box>
+        <Button
+          id={`${props.id}-right`}
+          sx={{ ...styles.navButton, opacity: 1 }}
+          onClick={(e) => handleClick(e)}
+          size="small"
+        >
+          <ArrowForwardIosRoundedIcon
+            fontSize="medium"
+            sx={{
+              pointerEvents: 'none',
+            }}
+          />
+        </Button>
+      </Box>
     </Box>
   );
 }
